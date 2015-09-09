@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function func
+{
+ if [ $1 -ge 0 ]
+ then
+    echo "$1"
+    exit 0
+ else
+    echo "erro" >&2
+    exit 1
+ fi
+}
+
+func $1

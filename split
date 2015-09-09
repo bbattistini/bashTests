@@ -1,0 +1,47 @@
+#!/bin/bash
+cols=$(tput cols)
+
+function centerText {
+
+    [ -z "$1" ] && textSize=0 || textSize=$(expr length "$1")
+
+    [ "$textSize" -eq 0 ] && zeroString=0 || zeroString=-1
+
+    if [ "$zeroString" -eq 0 ]
+    then
+        center=80
+    else
+        let center="($cols - $textSize) / 2"
+    fi
+
+    ret=$(eval "printf "$2"%.0s {1..$center}")
+    ret=$ret$1
+    if [ "$zeroString" -ne 0 ]
+    then
+        ret=$ret$(eval "printf "$2"%.0s {$((center+textSize+1))..$cols}")
+    fi
+    
+    echo "$ret"
+}
+
+function main {
+    centerText "" "*"
+    centerText "KoS Frist Preview" "."
+    centerText "Welcome !" "."
+    centerText "" "*"
+
+    echo -n "Type command:"
+    read command
+
+    final=""
+    for param in $command
+    do
+        final="$final $param"
+    done
+    #gnome-terminal -e "$final"
+    #sleep 3
+    #echo $!
+}
+
+clear
+main
